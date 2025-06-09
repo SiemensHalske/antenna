@@ -24,8 +24,8 @@ void loop()
     Serial.write(0xAA);
     Serial.write(0x55);
 
-    // Send block size (BUFFER_SIZE * 2 bytes)
-    uint16_t blockSize = BUFFER_SIZE * 2;
+    // Send block size (sizeof(sampleBuffer) bytes)
+    uint16_t blockSize = sizeof(sampleBuffer);
     Serial.write(lowByte(blockSize));
     Serial.write(highByte(blockSize));
 
