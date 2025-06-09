@@ -23,6 +23,9 @@ extern unsigned int targetSampleRate;     // Current sample rate
 extern uint16_t *sampleBuffer;            // Pointer to sample buffer
 extern volatile bool sampleFlag;          // Flag to indicate buffer is full
 extern volatile uint16_t sampleIndex;     // Current index in the sample buffer
+const uint8_t PREAMBLE_BYTE_1 = 0xAA; // Frame preamble first byte
+const uint8_t PREAMBLE_BYTE_2 = 0x55; // Frame preamble second byte
+const uint8_t STOP_BYTE = 0xFE;       // Frame stop byte
 
 extern RTC_DS3231 rtc;
 
