@@ -5,5 +5,6 @@
 #include "sampleISR.h"
 
 void setup();
+void configureSampling();
 
 #endif // SETUP_H

@@ -1,4 +1,47 @@
 #include "setup.h"
+#include "sampleISR.h"
+
+static void setSamplingParameters(unsigned int rate, unsigned int size)
+{
+    targetSampleRate = rate;
+    bufferSize = size;
+
+    if (sampleBuffer)
+    {
+        delete[] sampleBuffer;
+    }
+
+    sampleBuffer = new uint16_t[bufferSize];
+    sampleIndex = 0;
+
+    Timer1.initialize(1000000UL / targetSampleRate);
+    Timer1.attachInterrupt(sampleISR);
+}
+
+void configureSampling()
+{
+    unsigned int rate = DEFAULT_SAMPLE_RATE;
+    unsigned int size = DEFAULT_BUFFER_SIZE;
+
+    Serial.println("Send 'rate size' within 3s to override defaults...");
+    unsigned long start = millis();
+    while (millis() - start < 3000)
+    {
+        if (Serial.available())
+        {
+            rate = Serial.parseInt();
+            size = Serial.parseInt();
+            break;
+        }
+    }
+
+    if (rate == 0)
+        rate = DEFAULT_SAMPLE_RATE;
+    if (size == 0)
+        size = DEFAULT_BUFFER_SIZE;
+
+    setSamplingParameters(rate, size);
+}
 
 void setup()
 {
@@ -27,9 +70,8 @@ void setup()
         rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
     }
 
-    // Init Timer1 for sampling
-    Timer1.initialize(1000000UL / TARGET_SAMPLE_RATE);
-    Timer1.attachInterrupt(sampleISR);
+    // Configure sampling parameters and Timer1
+    configureSampling();
 
     pinMode(LED_BUILTIN, OUTPUT);
 

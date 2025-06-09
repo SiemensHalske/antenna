@@ -3,7 +3,7 @@
 
 void sampleISR()
 {
-    if (sampleIndex < BUFFER_SIZE)
+    if (sampleIndex < bufferSize)
     {
         sampleBuffer[sampleIndex++] = readMCP3008(ADC_CHANNEL);
     }
