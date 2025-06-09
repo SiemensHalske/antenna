@@ -24,8 +24,8 @@ void loop()
     Serial.write(0xAA);
     Serial.write(0x55);
 
-    // Send block size (BUFFER_SIZE * 2 bytes)
-    uint16_t blockSize = BUFFER_SIZE * 2;
+    // Send block size (bufferSize * 2 bytes)
+    uint16_t blockSize = bufferSize * 2;
     Serial.write(lowByte(blockSize));
     Serial.write(highByte(blockSize));
 
@@ -33,7 +33,7 @@ void loop()
     sendTimestamp();
 
     // Send sample data
-    for (uint16_t i = 0; i < BUFFER_SIZE; i++)
+    for (uint16_t i = 0; i < bufferSize; i++)
     {
       Serial.write(lowByte(sampleBuffer[i]));
       Serial.write(highByte(sampleBuffer[i]));
