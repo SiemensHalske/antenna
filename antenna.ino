@@ -21,8 +21,8 @@ void loop()
     digitalWrite(LED_BUILTIN, HIGH); // Optional: visualize block start
 
     // Send Preamble
-    Serial.write(0xAA);
-    Serial.write(0x55);
+    Serial.write(PREAMBLE_BYTE_1);
+    Serial.write(PREAMBLE_BYTE_2);
 
     // Send block size (BUFFER_SIZE * 2 bytes)
     uint16_t blockSize = BUFFER_SIZE * 2;
@@ -40,7 +40,7 @@ void loop()
     }
 
     // Send Stopbyte
-    Serial.write(0xFE);
+    Serial.write(STOP_BYTE);
 
     // Reset for next block
     sampleIndex = 0;
